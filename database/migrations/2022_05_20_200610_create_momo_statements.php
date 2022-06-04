@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('transaction_type');
             $table->double('amount', 8, 2);
             $table->double('fees', 8, 2);
-            $table->double('e-levy', 8, 2);
+            $table->double('e_levy', 8, 2);
             $table->double('bal_before', 8, 2);
             $table->double('bal_after', 8, 2);
             $table->string('to_no')->nullable();
