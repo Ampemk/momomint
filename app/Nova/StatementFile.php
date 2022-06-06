@@ -54,9 +54,22 @@ class StatementFile extends Resource
             File::make('Original path')->disk('s3'),
             File::make('Cleaned path')->disk('s3'),
             HasMany::make('MomoStatements')
-
         ];
     }
+
+
+   public function fieldsForCreate(NovaRequest $request){
+	return [
+            Text::make('original_path'),
+            Text::make('cleaned_path'),
+            Boolean::make('processed'),
+            BelongsTo::make('Account'),
+	    Text::make('user_id')->default(\Auth::user()->id),
+            File::make('Original path')->disk('s3'),
+            File::make('Cleaned path')->disk('s3'),
+            HasMany::make('MomoStatements') 
+	];
+   }
 
     /**
      * Get the cards available for the request.

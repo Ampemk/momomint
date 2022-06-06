@@ -17,7 +17,7 @@ class MomoStatement extends Model
         'transaction_type',
         'amount',
         'fees',
-        'e-levy',
+        'e_levy',
         'bal_before',
         'bal_after',
         'to_no',
@@ -30,6 +30,7 @@ class MomoStatement extends Model
         'user_id',
         'statement_file_id',
     ];
+   protected $casts = ['transaction_date' => 'datetime'];
 
     public function account()
     {

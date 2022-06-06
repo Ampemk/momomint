@@ -8,7 +8,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\HasMany;
-
+use Laravel\Nova\Fields\BelongsTo;
 
 class Account extends Resource
 {
@@ -54,7 +54,7 @@ class Account extends Resource
             Text::make('Account number')
                 ->sortable()
                 ->rules('required', 'max:255'),
-            HasOne::make('User'),
+            BelongsTo::make('User'),
             HasMany::make('StatementFile'),
 
 

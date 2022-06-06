@@ -32,7 +32,6 @@ class MomoStatementsImport implements OnEachRow, WithUpserts, WithHeadingRow
 
     public function onRow(Row $row)
     {
-
         $transaction_date = date("Y-m-d H:i:s", strtotime($row['transaction_date']));
         return MomoStatement::updateOrCreate(
             ['f_id' => $row['f_id']],

@@ -8,6 +8,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\DateTime;
 
 class MomoStatement extends Resource
 {
@@ -44,13 +45,14 @@ class MomoStatement extends Resource
     {
         return [
             ID::make()->sortable(),
+	    DateTime::make('transaction_date'),
             Text::make('from_acct'),
             Text::make('from_name'),
             Text::make('from_no'),
             Text::make('transaction_type'),
             Text::make('amount'),
             Text::make('fees'),
-            Text::make('e-levy'),
+            Text::make('e_levy'),
             Text::make('bal_before'),
             Text::make('bal_after'),
             Text::make('to_no'),
