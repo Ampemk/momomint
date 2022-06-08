@@ -33,6 +33,10 @@ class MomoStatement extends Resource
      */
     public static $search = [
         'id',
+        'from_name',
+        'to_name',
+        'from_no',
+        'to_no'
     ];
 
     /**
@@ -45,25 +49,25 @@ class MomoStatement extends Resource
     {
         return [
             ID::make()->sortable(),
-	    DateTime::make('transaction_date'),
-            Text::make('from_acct'),
-            Text::make('from_name'),
-            Text::make('from_no'),
-            Text::make('transaction_type'),
-            Text::make('amount'),
+            DateTime::make('transaction_date')->sortable(),
+            Text::make('f_id')->sortable(),
+            Text::make('amount')->sortable(),
             Text::make('fees'),
             Text::make('e_levy'),
-            Text::make('bal_before'),
-            Text::make('bal_after'),
-            Text::make('to_no'),
+            Text::make('from_name'),
             Text::make('to_name'),
-            Text::make('to_acct'),
-            Text::make('f_id'),
             Text::make('ref'),
-            Text::make('ova'),
-            HasOne::make('User'),
-            HasOne::make('Account'),
-            BelongsTo::make('StatementFile'),
+            Text::make('from_acct')->hideFromIndex(),
+            Text::make('from_no')->hideFromIndex(),
+            Text::make('transaction_type')->sortable(),
+            Text::make('bal_before')->hideFromIndex(),
+            Text::make('bal_after')->hideFromIndex(),
+            Text::make('to_no')->hideFromIndex(),
+            Text::make('to_acct')->hideFromIndex(),
+            Text::make('ova')->hideFromIndex(),
+            HasOne::make('User')->hideFromIndex(),
+            HasOne::make('Account')->hideFromIndex(),
+            BelongsTo::make('StatementFile')->hideFromIndex(),
 
         ];
     }

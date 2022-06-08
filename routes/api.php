@@ -22,3 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/upload_statement', [StatementFile::class, 'upload_statement']);
 Route::get('/dashboard', [DashboardController::class, 'index']);
+
+//Webhook url
+Route::webhooks('webhook');

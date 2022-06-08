@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\File;
 use app\Nova\Actions\ProcessStatement;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Date;
 
 class StatementFile extends Resource
 {
@@ -35,6 +36,7 @@ class StatementFile extends Resource
      */
     public static $search = [
         'id',
+        'created_at'
     ];
 
     /**
@@ -47,8 +49,9 @@ class StatementFile extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('original_path'),
-            Text::make('cleaned_path'),
+            Date::make('created_at')->sortable(),
+            Text::make('original_path')->hideFromIndex(),
+            Text::make('cleaned_path')->hideFromIndex(),
             Boolean::make('processed'),
             BelongsTo::make('Account'),
             File::make('Original path')->disk('s3'),
@@ -58,18 +61,19 @@ class StatementFile extends Resource
     }
 
 
-   public function fieldsForCreate(NovaRequest $request){
-	return [
+    public function fieldsForCreate(NovaRequest $request)
+    {
+        return [
             Text::make('original_path'),
             Text::make('cleaned_path'),
             Boolean::make('processed'),
             BelongsTo::make('Account'),
-	    Text::make('user_id')->default(\Auth::user()->id),
+            Text::make('user_id')->default(\Auth::user()->id),
             File::make('Original path')->disk('s3'),
             File::make('Cleaned path')->disk('s3'),
-            HasMany::make('MomoStatements') 
-	];
-   }
+            HasMany::make('MomoStatements')
+        ];
+    }
 
     /**
      * Get the cards available for the request.
