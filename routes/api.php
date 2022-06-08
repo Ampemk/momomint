@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Models\StatementFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WebhookVerifyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,4 @@ Route::get('/dashboard', [DashboardController::class, 'index']);
 
 //Webhook url
 Route::webhooks('webhook');
+Route::get('/webhook', [WebhookVerifyController::class, 'verifyEndpoint']);
