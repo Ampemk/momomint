@@ -13,7 +13,7 @@ class MomoStatementControllerTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function test_insert()
     {
         $response = $this->get('/');
 

@@ -24,17 +24,19 @@ class ProcessWebhookJob extends SpatieProcessWebhookJob
      */
     public function handle()
     {
-        //
-        return true;
-        $payload = (object)$this->webhookCall->payload;
-        if ($this->WebhookCall->messages->text->type !== 'text') {
+        $payload = json_decode($this->webhookCall->payload);
+        $value = $payload->entry[0]->changes[0]->value;
+        $messages = $value->messages[0];
+
+        if ($messages->type !== 'text') {
             return false;
         }
-        $message = $this->WebhookCall->messages->text->body;
-        $phone_number = $this->WebhookCall->messages->from;
+
+        $contact = $value->contacts[0];
+        $message = $messages->text->body;
+        $phone_number = $contact->wa_id;
 
         $account = Account::where('account_number', $phone_number)->first();
-
 
         if (Str::of($message)->startsWith('Payment made for')) {
             $this->startWithPayment($message, $phone_number, $account);
