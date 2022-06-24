@@ -86,10 +86,10 @@ class ProcessWebhookJob extends SpatieProcessWebhookJob
         $reference = $this->getReference($message, 1);
 
         $momo_statement = new MomoStatement();
-        $momo_statement->from_name = $account->user->first_name . ' ' . $account->user->last_name;
+        $momo_statement->from_name = $nameOrCompany;
         $momo_statement->amount = $amount;
         $momo_statement->to_no = $toNumber;
-        $momo_statement->to_name = $nameOrCompany;
+        $momo_statement->to_name = $account->user->first_name . ' ' . $account->user->last_name;
         $momo_statement->ref = $reference;
         $momo_statement->fees = $fees_charged + $tax_charged;
         $momo_statement->f_id = $transaction_id;
