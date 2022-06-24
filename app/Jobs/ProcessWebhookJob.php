@@ -85,21 +85,40 @@ class ProcessWebhookJob extends SpatieProcessWebhookJob
         $transaction_id = $this->getTransactionID($message, 'Transaction ID');
         $reference = $this->getReference($message, 1);
 
-        $momo_statement = new MomoStatement();
-        $momo_statement->from_name = $nameOrCompany;
-        $momo_statement->amount = $amount;
-        $momo_statement->to_no = $toNumber;
-        $momo_statement->to_name = $account->user->first_name . ' ' . $account->user->last_name;
-        $momo_statement->ref = $reference;
-        $momo_statement->fees = $fees_charged + $tax_charged;
-        $momo_statement->f_id = $transaction_id;
-        $momo_statement->bal_before = $current_balance;
-        $momo_statement->bal_after = $available_balance;
-        $momo_statement->from_no = $phone_number;
-        $momo_statement->account_id = $account->id;
-        $momo_statement->user_id = $account->user->id;
-        $momo_statement->transaction_date = date('Y-m-d H:i:s');
-        $momo_statement->save();
+
+        if (MomoStatement::where('f_id', $transaction_id)->exists()) {
+            MomoStatement::where('f_id', $transaction_id)->update(array(
+                'from_name ' => $nameOrCompany,
+                'amount ' => $amount,
+                'to_no ' => $toNumber,
+                'to_name ' => $account->user->first_name . ' ' . $account->user->last_name,
+                'ref ' => $reference,
+                'fees ' => $fees_charged + $tax_charged,
+                'f_id ' => $transaction_id,
+                'bal_before ' => $current_balance,
+                'bal_after ' => $available_balance,
+                'from_no ' => $phone_number,
+                'account_id ' => $account->id,
+                'user_id ' => $account->user->id,
+                'transaction_date ' => date('Y-m-d H:i:s')
+            ));
+        } else {
+            $momo_statement = new MomoStatement();
+            $momo_statement->from_name = $nameOrCompany;
+            $momo_statement->amount = $amount;
+            $momo_statement->to_no = $toNumber;
+            $momo_statement->to_name = $account->user->first_name . ' ' . $account->user->last_name;
+            $momo_statement->ref = $reference;
+            $momo_statement->fees = $fees_charged + $tax_charged;
+            $momo_statement->f_id = $transaction_id;
+            $momo_statement->bal_before = $current_balance;
+            $momo_statement->bal_after = $available_balance;
+            $momo_statement->from_no = $phone_number;
+            $momo_statement->account_id = $account->id;
+            $momo_statement->user_id = $account->user->id;
+            $momo_statement->transaction_date = date('Y-m-d H:i:s');
+            $momo_statement->save();
+        }
     }
 
     public function startWithPayment($message, $phone_number, $account)
@@ -134,21 +153,39 @@ class ProcessWebhookJob extends SpatieProcessWebhookJob
         $transaction_id = $this->getTransactionID($message, 'Transaction ID');
         $reference = $this->getReference($message, 1);
 
-        $momo_statement = new MomoStatement();
-        $momo_statement->from_name = $account->user->first_name . ' ' . $account->user->last_name;
-        $momo_statement->amount = $amount;
-        $momo_statement->to_no = $toNumber;
-        $momo_statement->to_name = $nameOrCompany;
-        $momo_statement->ref = $reference;
-        $momo_statement->fees = $fees_charged + $tax_charged;
-        $momo_statement->f_id = $transaction_id;
-        $momo_statement->bal_before = $current_balance;
-        $momo_statement->bal_after = $available_balance;
-        $momo_statement->from_no = $phone_number;
-        $momo_statement->account_id = $account->id;
-        $momo_statement->user_id = $account->user->id;
-        $momo_statement->transaction_date = date('Y-m-d H:i:s');
-        $momo_statement->save();
+        if (MomoStatement::where('f_id', $transaction_id)->exists()) {
+            MomoStatement::where('f_id', $transaction_id)->update(array(
+                'from_name ' => $nameOrCompany,
+                'amount ' => $amount,
+                'to_no ' => $toNumber,
+                'to_name ' => $account->user->first_name . ' ' . $account->user->last_name,
+                'ref ' => $reference,
+                'fees ' => $fees_charged + $tax_charged,
+                'f_id ' => $transaction_id,
+                'bal_before ' => $current_balance,
+                'bal_after ' => $available_balance,
+                'from_no ' => $phone_number,
+                'account_id ' => $account->id,
+                'user_id ' => $account->user->id,
+                'transaction_date ' => date('Y-m-d H:i:s')
+            ));
+        } else {
+            $momo_statement = new MomoStatement();
+            $momo_statement->from_name = $account->user->first_name . ' ' . $account->user->last_name;
+            $momo_statement->amount = $amount;
+            $momo_statement->to_no = $toNumber;
+            $momo_statement->to_name = $nameOrCompany;
+            $momo_statement->ref = $reference;
+            $momo_statement->fees = $fees_charged + $tax_charged;
+            $momo_statement->f_id = $transaction_id;
+            $momo_statement->bal_before = $current_balance;
+            $momo_statement->bal_after = $available_balance;
+            $momo_statement->from_no = $phone_number;
+            $momo_statement->account_id = $account->id;
+            $momo_statement->user_id = $account->user->id;
+            $momo_statement->transaction_date = date('Y-m-d H:i:s');
+            $momo_statement->save();
+        }
     }
 
     public function startWithYour($message, $phone_number, $account)
@@ -182,22 +219,38 @@ class ProcessWebhookJob extends SpatieProcessWebhookJob
         }
         $reference = $this->getReference($message, 2);
         $transaction_id = $this->getTransactionID($message, 'Transaction Id');
-
-        $momo_statement = new MomoStatement();
-        $momo_statement->from_name = $account->user->first_name . ' ' . $account->user->last_name;
-        $momo_statement->amount = $amount;
-        $momo_statement->to_no = $toNumber;
-        $momo_statement->to_name = $nameOrCompany;
-        $momo_statement->ref = $reference;
-        $momo_statement->fees = $fees_charged + $tax_charged;
-        $momo_statement->f_id = $transaction_id;
-        $momo_statement->bal_before = $current_balance;
-        //$momo_statement->bal_after = $available_balance;
-        $momo_statement->from_no = $phone_number;
-        $momo_statement->account_id = $account->id;
-        $momo_statement->user_id = $account->user->id;
-        $momo_statement->transaction_date =  date('Y-m-d H:i:s');
-        $momo_statement->save();
+        if (MomoStatement::where('f_id', $transaction_id)->exists()) {
+            MomoStatement::where('f_id', $transaction_id)->update(array(
+                'from_name ' => $nameOrCompany,
+                'amount ' => $amount,
+                'to_no ' => $toNumber,
+                'to_name ' => $account->user->first_name . ' ' . $account->user->last_name,
+                'ref ' => $reference,
+                'fees ' => $fees_charged + $tax_charged,
+                'f_id ' => $transaction_id,
+                'bal_before ' => $current_balance,
+                'from_no ' => $phone_number,
+                'account_id ' => $account->id,
+                'user_id ' => $account->user->id,
+                'transaction_date ' => date('Y-m-d H:i:s')
+            ));
+        } else {
+            $momo_statement = new MomoStatement();
+            $momo_statement->from_name = $account->user->first_name . ' ' . $account->user->last_name;
+            $momo_statement->amount = $amount;
+            $momo_statement->to_no = $toNumber;
+            $momo_statement->to_name = $nameOrCompany;
+            $momo_statement->ref = $reference;
+            $momo_statement->fees = $fees_charged + $tax_charged;
+            $momo_statement->f_id = $transaction_id;
+            $momo_statement->bal_before = $current_balance;
+            //$momo_statement->bal_after = $available_balance;
+            $momo_statement->from_no = $phone_number;
+            $momo_statement->account_id = $account->id;
+            $momo_statement->user_id = $account->user->id;
+            $momo_statement->transaction_date =  date('Y-m-d H:i:s');
+            $momo_statement->save();
+        }
     }
 
     //get the reference 
